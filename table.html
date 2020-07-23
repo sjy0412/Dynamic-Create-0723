@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style >
+			#box table{
+				border-collapse: collapse; /* 当两条边线重合时只显示一条边线 */	
+			}
+			
+		</style>
+	</head>
+	<body>
+		<!-- <table >
+			<tr><th>Header</th></tr>
+			<tr><td>Data</td></tr>
+		</table> -->
+		<div id="box"></div>
+		<script src="common.js"></script>
+		<script>
+			//准备数据
+			var datas = [
+				{name:'zs', subject: '语文', score:90},
+				{name:'ls', subject: '数学', score:94},
+				{name:'jy', subject: '物理', score:87},
+				{name:'wf', subject: '英语', score:90},
+				{name:'qq', subject: '地理', score:78},
+			];
+			//表头数据
+			var headDates = ['姓名', '科目', '成绩', '操作'];
+			//1 创建table元素
+			var table = document.createElement('table');
+			my$('box').appendChild(table);//把table放置到页面上
+			table.border = '1px';
+			table.width = '400px';
+			
+			// 2 创建表头
+			var thead = document.createElement('thead');
+			table.appendChild(thead);
+			
+			var tr = document.createElement('tr');
+			thead.appendChild(tr);
+			tr.style.height = '40px';
+			tr.style.backgroundColor = 'lightcyan'
+			//遍历头部数据,创建th
+			for (var i = 0; i < headDates.length; i++) {
+				var th = document.createElement('th');
+				tr.appendChild(th);
+				setInnerText(th,headDates[i]);
+				
+				
+			}
+			// 3 创建数据行
+			var tbody = document.createElement('tbody');
+			table.appendChild(tbody);
+			table.style.textAlign = 'center';
+			for (var i = 0; i < datas.length; i++) {
+				var data = datas[i];
+				tr = document.createElement('tr');
+				tbody.appendChild(tr);
+				for (var key in data) {
+					var td = document.createElement('td');
+					tr.appendChild(td);
+					setInnerText(td,data[key]);
+				}
+				//生成删除对应的列
+				td = document.createElement('td');
+				tr.appendChild(td);
+				//删除的超链接
+				var link = document.createElement('a');
+				td.appendChild(link);
+				link.href = 'Javascript:void(0)';
+				setInnerText(link, '删除');
+				link.onclick = linkDelete;
+			}
+			function linkDelete() {
+				//removeChild() 
+				//获取要删除的行,获取父元素
+				var tr = this.parentNode.parentNode;
+				tbody.removeChild(tr);
+				return false;
+			}
+		</script>
+	</body>
+</html>
